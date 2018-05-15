@@ -46,12 +46,40 @@ module IO::Buffered
   end
 end
 
+class Object
+  def self.fail_if_pointer!
+    {% for ivar in @type.instance_vars %}
+      {{ivar.type}}.fail_if_pointer!
+    {% end %}
+  end
+end
+
+struct Union
+  def self.fail_if_pointer!
+    {% for type in T %}
+      {{type}}.fail_if_pointer!
+    {% end %}
+  end
+end
+
+class Reference
+  def self.fail_if_pointer!
+    {% raise "Type is a pointer!" %}
+  end
+end
+
+struct Pointer(T)
+  def self.fail_if_pointer!
+    {% raise "Type is a pointer!" %}
+  end
+end
+
 class PChan(T)
   @reader_pipe : IO::Buffered
   @writer_pipe : IO::Buffered
 
   def initialize
-    {% raise "Must be a struct" if T < Reference %}
+    T.fail_if_pointer!
     @reader_pipe, @writer_pipe = IO.pipe
 
     @reader_pipe.sync = true
