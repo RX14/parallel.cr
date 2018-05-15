@@ -37,8 +37,8 @@ def worker(in_channel, out_channel)
   end
 end
 
-job_channel = Channel(Int32).new
-results_channel = Channel(Int32).new
+job_channel = PChan(Int32).new
+results_channel = PChan(Int32).new
 
 # spawn 4 workers
 4.times do
