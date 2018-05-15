@@ -1,3 +1,4 @@
+# Patch IO::Buffered to not buffer reads when `sync?`
 module IO::Buffered
   def read_byte : UInt8?
     check_open
