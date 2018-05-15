@@ -1,0 +1,9 @@
+name: parallel
+version: 0.1.0
+
+authors:
+  - RX14 <chris@rx14.co.uk>
+
+crystal: 0.24.2
+
+license: MIT
